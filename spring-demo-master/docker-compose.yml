@@ -1,0 +1,55 @@
+version: "3"
+services:
+  mysqldb:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: city-db
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
+    container_name: mysqldb
+    ports:
+      - "3306:3306"
+    networks:
+      - DS_SQL_SPRING
+    command: --init-file /data/application/dumpfile.sql
+    volumes:
+      - ./mysqldb/Dump20230110.sql:/data/application/dumpfile.sql
+
+  backend:
+    image: backend
+    depends_on:
+      - mysqldb
+#      - rabbit
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    networks:
+      - DS_SQL_SPRING
+    environment:
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/city-db?serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+#      - SPRING_RABBITMQ_HOST=rabbit
+
+#  rabbit:
+#    image: rabbitmq
+##    network_mode: host
+#    ports:
+#      - 5672:5672
+#    networks:
+#      - DS_SQL_SPRING
+
+
+
+  frontend:
+    image: frontend
+    container_name: frontend-energy
+#    network_mode: host
+    ports:
+      - "8081:8080"
+    networks:
+      - DS_SQL_SPRING
+
+networks:
+  DS_SQL_SPRING:
+    driver: bridge
