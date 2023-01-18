@@ -11,9 +11,6 @@ import ro.tuc.ds2020.services.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
-
-import static org.hibernate.usertype.DynamicParameterizedType.ENTITY;
 
 @RestController
 @CrossOrigin

@@ -2,11 +2,11 @@ import authHeader, { BASE_URL, HTTP } from "../http";
 
 export default {
   allItems() {
-    return HTTP.get(BASE_URL + "/devices/admin", { headers: authHeader() }).then(
-      (response) => {
-        return response.data;
-      }
-    );
+    return HTTP.get(BASE_URL + "/devices/admin", {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
   },
   create(device) {
     return HTTP.post(BASE_URL + "/devices/admin", device, {

@@ -19,7 +19,6 @@ services:
     image: backend
     depends_on:
       - mysqldb
-#      - rabbit
     restart: on-failure
     ports:
       - "8080:8080"
@@ -29,22 +28,11 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/city-db?serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
-#      - SPRING_RABBITMQ_HOST=rabbit
-
-#  rabbit:
-#    image: rabbitmq
-##    network_mode: host
-#    ports:
-#      - 5672:5672
-#    networks:
-#      - DS_SQL_SPRING
-
-
 
   frontend:
     image: frontend
     container_name: frontend-energy
-#    network_mode: host
+    network_mode: host
     ports:
       - "8081:8080"
     networks:

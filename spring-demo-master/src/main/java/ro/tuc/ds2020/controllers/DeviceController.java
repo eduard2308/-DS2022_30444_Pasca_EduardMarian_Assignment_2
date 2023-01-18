@@ -1,5 +1,6 @@
 package ro.tuc.ds2020.controllers;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import ro.tuc.ds2020.dtos.DeviceDTO;
 import ro.tuc.ds2020.dtos.UserDTO;
 import ro.tuc.ds2020.dtos.builders.DeviceBuilder;
 import ro.tuc.ds2020.services.DeviceService;
+import ro.tuc.ds2020.websockets.Message;
 
 import java.util.List;
 import java.util.UUID;
@@ -67,5 +69,12 @@ public class DeviceController {
     public ResponseEntity<List<DeviceDTO>> getAllDevicesByUserId(@PathVariable int userId) {
         List<DeviceDTO> dtos = deviceService.getAllDevicesByUserId(userId);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PostMapping("/{userId}")
+    @JsonRawValue
+    public void sendNotification(@PathVariable int userId, @RequestBody Message message) throws Exception {
+        deviceService.sendNotification(userId, message);
     }
 }

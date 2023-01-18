@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       Items
-      <v-btn small @click="switchToUsers()">Users</v-btn>
+      <v-btn @click="switchToUsers()">Users</v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"

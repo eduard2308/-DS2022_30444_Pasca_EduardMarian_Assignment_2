@@ -1,8 +1,11 @@
 package ro.tuc.ds2020.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -16,6 +19,7 @@ public class EnergyConsumption implements Serializable {
     private int deviceId;
 
     @Column(name = "date", nullable = false)
+    @DateTimeFormat
     private Date date;
 
     @Column(name = "consumption", nullable = false)
@@ -61,5 +65,9 @@ public class EnergyConsumption implements Serializable {
 
     public void setConsumption(float consumption) {
         this.consumption = consumption;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }

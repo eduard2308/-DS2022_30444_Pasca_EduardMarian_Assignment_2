@@ -36,4 +36,11 @@ export default {
       return response.data;
     });
   },
+  sendNotification(userId, message) {
+    return HTTP.post(BASE_URL + /devices/ + userId, message, {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
+  },
 };

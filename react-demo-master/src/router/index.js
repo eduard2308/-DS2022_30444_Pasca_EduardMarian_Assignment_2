@@ -5,6 +5,7 @@ import ItemList from "../views/ItemList.vue";
 import { auth as store } from "../store/auth.module";
 import Login from "../views/Login";
 import ItemListAdmin from "../views/ItemListAdmin";
+import Energy from "@/views/Energy";
 
 Vue.use(VueRouter);
 
@@ -27,8 +28,20 @@ const routes = [
     },
   },
   {
+    path: "/energy",
+    name: "Energy",
+    component: Energy,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isCustomer(store.state)) {
+        next();
+      } else {
+        next({ name: "Login" });
+      }
+    },
+  },
+  {
     path: "/devices",
-    name: "Devices",
+    name: "ItemList",
     component: ItemList,
     beforeEnter: (to, from, next) => {
       if (store.state.status.loggedIn) {
