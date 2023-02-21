@@ -8,5 +8,8 @@ import lombok.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Message {
-    public String message;
+
+    public String text;
+    private String sender;
+    private boolean isTyping;
 }

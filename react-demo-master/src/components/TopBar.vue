@@ -6,7 +6,9 @@
       <v-toolbar-title>Lab example</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
+      <v-tabs align-with-title>
+        <v-tab @click="chat">Chat</v-tab>
+      </v-tabs>
       <v-btn icon @click="logout">
         <v-icon>logout</v-icon>
       </v-btn>
@@ -23,6 +25,9 @@ export default {
     logout() {
       this.$store.dispatch("auth/logout");
       router.push("/");
+    },
+    chat() {
+      router.push("/chat");
     },
   },
 };

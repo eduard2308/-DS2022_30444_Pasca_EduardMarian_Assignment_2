@@ -80,23 +80,31 @@ export default {
     switchToEnergy() {
       this.$router.push("/energy");
     },
-  },
-  created() {
-    this.refreshList();
-  },
-  connect() {
-    this.socket = new SockJS("ws://localhost:8082/app/websocket");
-    this.stompClient = Stomp.over(this.socket);
-    // eslint-disable-next-line no-unused-vars
-    this.stompClient.connect({}, (frame) => {
-      this.connected = true;
-      this.stompClient.subscribe(
-        "/notification" + this.$store.getters["auth/getLoggedUserId"],
-        (tick) => {
-          this.received_messages.push(JSON.parse(tick.body));
+    connect() {
+      this.socket = new SockJS("http://localhost:8080/api/websocket");
+      this.stompClient = Stomp.over(this.socket);
+      // eslint-disable-next-line no-unused-vars
+      this.stompClient.connect(
+        {},
+        (frame) => {
+          this.connected = true;
+          console.log(frame);
+          this.stompClient.subscribe("/topic", (tick) => {
+            console.log(tick);
+            alert(tick.body);
+            this.received_messages.push(JSON.parse(tick.body));
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.connected = false;
         }
       );
-    });
+    },
+  },
+  created() {
+    this.connect();
+    this.refreshList();
   },
 };
 </script>

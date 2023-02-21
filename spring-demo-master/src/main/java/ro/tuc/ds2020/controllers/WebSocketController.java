@@ -14,6 +14,7 @@ public class WebSocketController {
 
     public void notificationFunction(Message message, int userId) throws Exception {
         Thread.sleep(5000);
-        simpMessagingTemplate.convertAndSend("/notification" + userId, message);
+        simpMessagingTemplate.convertAndSend("/topic" , "LIMIT EXCEEDED");
     }
+
 }

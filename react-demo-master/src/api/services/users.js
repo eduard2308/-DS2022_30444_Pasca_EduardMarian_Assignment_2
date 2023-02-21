@@ -36,4 +36,18 @@ export default {
       }
     );
   },
+  allCustomers() {
+    return HTTP.get(BASE_URL + "/users/allCustomers", {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
+  },
+  allAdmins() {
+    return HTTP.get(BASE_URL + "/users/allAdmins", {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
+  },
 };

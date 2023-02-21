@@ -6,6 +6,7 @@ import { auth as store } from "../store/auth.module";
 import Login from "../views/Login";
 import ItemListAdmin from "../views/ItemListAdmin";
 import Energy from "@/views/Energy";
+import Chat from "@/views/Chat";
 
 Vue.use(VueRouter);
 
@@ -51,7 +52,6 @@ const routes = [
       }
     },
   },
-
   {
     path: "/devices/admin",
     name: "DevicesAdmin",
@@ -61,6 +61,19 @@ const routes = [
         next();
       } else {
         next({ name: "Devices" });
+      }
+    },
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
+    props: true,
+    beforeEnter: (to, from, next) => {
+      if (store.state.status.loggedIn) {
+        next();
+      } else {
+        next({ name: "Login" });
       }
     },
   },

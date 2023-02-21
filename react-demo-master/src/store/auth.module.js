@@ -68,6 +68,12 @@ export const auth = {
     },
     getLoggedUserId: (state) => {
       return state.user.id;
-    }
+    },
+    getLoggedUser: (state) => {
+      return state.user;
+    },
+    getEmail: (state) => {
+      return state.user.email;
+    },
   },
 };

@@ -5,23 +5,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.WebSocketController;
-import ro.tuc.ds2020.dtos.DeviceDTO;
 import ro.tuc.ds2020.dtos.EnergyConsumptionDTO;
-import ro.tuc.ds2020.dtos.UserDTO;
-import ro.tuc.ds2020.dtos.builders.DeviceBuilder;
 import ro.tuc.ds2020.dtos.builders.EnergyConsumptionBuilder;
-import ro.tuc.ds2020.dtos.builders.UserBuilder;
 import ro.tuc.ds2020.entities.Device;
 import ro.tuc.ds2020.entities.EnergyConsumption;
-import ro.tuc.ds2020.entities.User;
 import ro.tuc.ds2020.repositories.DeviceRepository;
 import ro.tuc.ds2020.repositories.EnergyConsumptionRepository;
 import ro.tuc.ds2020.websockets.Message;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,7 +59,7 @@ public class EnergyConsumptionService {
         if(sum.get() > device.getMaxHourlyEnergyConsumption()) {
             System.out.println("Device consumption reached!!!!");
             Message message = Message.builder()
-                    .message("Limit reached for device " + device.getId())
+                    .text("Limit reached for device " + device.getId())
                     .build();
             webSocketController.notificationFunction(message, device.getUserId());
         }

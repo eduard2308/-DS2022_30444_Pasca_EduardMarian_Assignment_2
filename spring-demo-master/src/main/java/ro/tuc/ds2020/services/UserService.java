@@ -3,7 +3,6 @@ package ro.tuc.ds2020.services;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.WebSocketController;
 import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundException;
@@ -11,12 +10,10 @@ import ro.tuc.ds2020.dtos.UserDTO;
 import ro.tuc.ds2020.dtos.builders.UserBuilder;
 import ro.tuc.ds2020.entities.User;
 import ro.tuc.ds2020.repositories.UserRepository;
-import ro.tuc.ds2020.services.util.CreateConfigFile;
-import ro.tuc.ds2020.websockets.Message;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +21,8 @@ import java.util.stream.Collectors;
 public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
+
+    private final WebSocketController webSocketController;
 
     public List<UserDTO> findUsers() {
         List<User> userList = userRepository.findAll();
@@ -77,8 +76,23 @@ public class UserService {
         return userRepository.findAllIds();
     }
 
+    public List<String> getAllCustomers() {
+        return userRepository.findAllCustomers()
+                .stream()
+                .map(User::getEmail)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getAllAdmins() {
+        return userRepository.findAllAdmins()
+                .stream()
+                .map(User::getEmail)
+                .collect(Collectors.toList());
+    }
+
 /*    public void update(UserDTO userDTO)
     {
         userRepository.save(UserBuilder.toEntity(userDTO));
     }*/
+
 }

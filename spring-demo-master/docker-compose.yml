@@ -32,7 +32,6 @@ services:
   frontend:
     image: frontend
     container_name: frontend-energy
-    network_mode: host
     ports:
       - "8081:8080"
     networks:
